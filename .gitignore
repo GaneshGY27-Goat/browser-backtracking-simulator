@@ -1,0 +1,10 @@
+# Compiled binaries
+*.exe
+*.o
+server
+console_demo
+
+# System & editor files
+.vscode/
+.idea/
+*.log
