@@ -5,6 +5,7 @@
 > **Programming Language:** C++ (ISO Standard C++11 / STL)  
 > **Main DSA Concept:** Stack (LIFO — Last In, First Out)  
 > **Institution:** JSPM's Rajarshi Shahu College of Engineering (RSCOE), Pune  
+> **Live Universal Website:** [https://ganeshgy27-goat.github.io/browser-backtracking-simulator/](https://ganeshgy27-goat.github.io/browser-backtracking-simulator/)  
 > **GitHub Repository:** [https://github.com/GaneshGY27-Goat/browser-backtracking-simulator](https://github.com/GaneshGY27-Goat/browser-backtracking-simulator)
 
 ---
