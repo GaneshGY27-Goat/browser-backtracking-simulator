@@ -29,6 +29,23 @@
         </div>
       </div>
       <div class="badge-group">
+        <button id="btn-team-modal" class="btn btn-ghost" title="View Project Team Members and College Info">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>Team Details</span>
+        </button>
+        <button id="btn-viva-modal" class="btn btn-ghost" title="View C++ Stack DSA Viva Guide">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>Viva Guide</span>
+        </button>
         <span class="status-badge" id="backend-status">
           <span class="status-dot"></span>
           <span id="backend-status-text">Connecting to C++ Backend...</span>
@@ -193,16 +210,151 @@
     </section>
   </main>
 
+  <!-- Team & Project Details Modal -->
+  <dialog id="team-modal" class="modal-dialog">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="panel-tag">Academic Information</span>
+          <h2>Project Details &amp; Group Members</h2>
+        </div>
+        <button id="btn-close-team" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-content">
+        <div class="project-meta-card">
+          <div class="meta-row"><span class="meta-label">Project Title:</span> <strong>Browser Backtracking Simulator</strong></div>
+          <div class="meta-row"><span class="meta-label">Subject:</span> <strong>Data Structures (DSA Mini Project)</strong></div>
+          <div class="meta-row"><span class="meta-label">Programming Language:</span> <strong>C++ (ISO Standard C++11 / STL)</strong></div>
+          <div class="meta-row"><span class="meta-label">Core DSA Concept:</span> <strong>Stack (LIFO — Last In, First Out)</strong></div>
+          <div class="meta-row"><span class="meta-label">Institution:</span> <strong>JSPM's Rajarshi Shahu College of Engineering (RSCOE), Pune</strong></div>
+          <div class="meta-desc">
+            <p><strong>Description:</strong> A stack-based browser navigation simulator that stores previously visited URLs and restores the previous page using the Back operation.</p>
+          </div>
+        </div>
+
+        <h3 class="team-heading">Group Members</h3>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar">GY</div>
+            <div class="team-info">
+              <h4>Ganesh Govind Yerawar</h4>
+              <span class="roll-badge">Roll: RBT25CS012</span>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">GV</div>
+            <div class="team-info">
+              <h4>Ghadge Vishal Kisan</h4>
+              <span class="roll-badge">Roll: RBT25CS013</span>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">HP</div>
+            <div class="team-info">
+              <h4>Harshal Subhash Patil</h4>
+              <span class="roll-badge">Roll: RBT25CS014</span>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">JA</div>
+            <div class="team-info">
+              <h4>Jade Sai Anand</h4>
+              <span class="roll-badge">Roll: RBT25CS016</span>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">JS</div>
+            <div class="team-info">
+              <h4>Jagtap Sairaj Prashant</h4>
+              <span class="roll-badge">Roll: RBT25CS017</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Viva Guide Modal -->
+  <dialog id="viva-modal" class="modal-dialog">
+    <div class="modal-box modal-wide">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="panel-tag">Viva Preparation</span>
+          <h2>DSA Concept &amp; Algorithm Explanation</h2>
+        </div>
+        <button id="btn-close-viva" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="modal-content">
+        <div class="viva-section">
+          <h3>1. How Backtracking Works with C++ <code>std::stack</code></h3>
+          <p>A stack is a <strong>LIFO (Last-In, First-Out)</strong> container. In browser navigation, each visit to a new page preserves the past:</p>
+          <div class="code-flow-box">
+            <div class="flow-step">
+              <span class="step-num">Step 1</span>
+              <div><strong>visitPage(url):</strong> If a page is already active, push it onto <code>history</code> stack (<code>history.push(currentPage)</code>). Then set <code>currentPage = url</code>. [Time: O(1)]</div>
+            </div>
+            <div class="flow-step">
+              <span class="step-num">Step 2</span>
+              <div><strong>goBack():</strong> If <code>history.empty()</code> is false, retrieve the most recent page with <code>history.top()</code> and remove it with <code>history.pop()</code>. Set <code>currentPage</code> to this restored URL. [Time: O(1)]</div>
+            </div>
+            <div class="flow-step">
+              <span class="step-num">Step 3</span>
+              <div><strong>showHistory():</strong> Clones the stack (<code>std::stack&lt;std::string&gt; temp = history;</code>) and repeatedly reads <code>temp.top()</code> and <code>temp.pop()</code> into a vector. The original stack is completely preserved! [Time: O(N)]</div>
+            </div>
+            <div class="flow-step">
+              <span class="step-num">Step 4</span>
+              <div><strong>clearHistory():</strong> Empties the stack in a while-loop and clears <code>currentPage</code>. [Time: O(N)]</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-section">
+          <h3>2. Key Viva Questions &amp; Rapid Answers</h3>
+          <div class="qa-grid">
+            <div class="qa-item">
+              <strong>Q: Why Stack and not Queue?</strong>
+              <p>Backtracking requires returning to the <em>most recent</em> item first (LIFO). A Queue is FIFO (First In, First Out), which would navigate to the oldest page first.</p>
+            </div>
+            <div class="qa-item">
+              <strong>Q: How do real browsers handle Forward?</strong>
+              <p>Real browsers use <em>two stacks</em>: a Back Stack and a Forward Stack. Clicking Back pushes onto Forward Stack; clicking a new link clears Forward Stack.</p>
+            </div>
+            <div class="qa-item">
+              <strong>Q: What is Stack Underflow?</strong>
+              <p>Attempting to pop or read the top of an empty stack. In our C++ code, we prevent underflow by checking <code>if (history.empty())</code>.</p>
+            </div>
+            <div class="qa-item">
+              <strong>Q: What are the complexities?</strong>
+              <p>Time Complexity: O(1) for push, pop, top. Space Complexity: O(N) where N is the number of visited URLs stored.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <!-- Footer -->
   <footer class="app-footer">
     <div class="footer-container">
-      <p class="footer-primary">
-        <strong>Browser Backtracking Simulator</strong> &bull; College Data Structures Mini Project
-      </p>
-      <p class="footer-secondary">
-        Backend: <strong>C++ STL (<code>std::stack&lt;std::string&gt;</code>)</strong> &bull; Frontend: <strong>Vanilla HTML5, CSS3, ES6 JavaScript</strong>
-      </p>
-      <p class="footer-author">Developed for College DSA Practical / Viva Assessment &bull; RSCOE Pune</p>
+      <div class="footer-team-section">
+        <h4 class="footer-team-title">Project Team Members (RSCOE Pune &bull; Batch 2025-2026)</h4>
+        <div class="footer-team-badges">
+          <span class="member-chip"><strong>Ganesh Govind Yerawar</strong> (RBT25CS012)</span>
+          <span class="member-chip"><strong>Ghadge Vishal Kisan</strong> (RBT25CS013)</span>
+          <span class="member-chip"><strong>Harshal Subhash Patil</strong> (RBT25CS014)</span>
+          <span class="member-chip"><strong>Jade Sai Anand</strong> (RBT25CS016)</span>
+          <span class="member-chip"><strong>Jagtap Sairaj Prashant</strong> (RBT25CS017)</span>
+        </div>
+      </div>
+      <div class="footer-bottom-bar">
+        <p class="footer-primary">
+          <strong>Browser Backtracking Simulator</strong> &bull; Data Structures Mini Project
+        </p>
+        <p class="footer-secondary">
+          Backend: <strong>C++ STL (<code>std::stack&lt;std::string&gt;</code>)</strong> &bull; Frontend: <strong>Vanilla HTML5, CSS3, ES6 JavaScript</strong>
+        </p>
+        <p class="footer-author">Developed for College DSA Practical / Viva Assessment &bull; RSCOE Pune</p>
+      </div>
     </div>
   </footer>
 

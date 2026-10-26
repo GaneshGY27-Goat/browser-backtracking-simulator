@@ -1,23 +1,37 @@
 # Browser Backtracking Simulator
 
-> **College Data Structures & Algorithms Mini Project**  
-> **Core Topic:** Stack Data Structure (LIFO - Last In, First Out)  
-> **Language:** C++ (Standard Template Library `std::stack<std::string>`)  
-> **Frontend:** Vanilla HTML5, Modern CSS3, JavaScript (ES6)  
-> **Backend:** Lightweight, Cross-Platform C++ HTTP Server (Winsock2 / POSIX Sockets)
+> **College Data Structures Mini Project**  
+> **Subject:** Data Structures (DSA)  
+> **Programming Language:** C++ (ISO Standard C++11 / STL)  
+> **Main DSA Concept:** Stack (LIFO — Last In, First Out)  
+> **Institution:** JSPM's Rajarshi Shahu College of Engineering (RSCOE), Pune  
+> **GitHub Repository:** [https://github.com/GaneshGY27-Goat/browser-backtracking-simulator](https://github.com/GaneshGY27-Goat/browser-backtracking-simulator)
 
 ---
 
-## 1. Project Overview
+## 👥 Project Team & Group Members
 
-The **Browser Backtracking Simulator** is an interactive, full-stack educational tool designed to demonstrate how real-world web browsers implement the **Back Button** mechanism using a **Stack** data structure.
+| Sr. No. | Student Full Name | Roll Number | Class / Division | Role / Contribution |
+| :---: | :--- | :---: | :---: | :--- |
+| **1** | **Ganesh Govind Yerawar** | **RBT25CS012** | SE Comp | C++ Backend & Socket Server Architecture |
+| **2** | **Ghadge Vishal Kisan** | **RBT25CS013** | SE Comp | Core Stack Engine (`std::stack`) & DSA Logic |
+| **3** | **Harshal Subhash Patil** | **RBT25CS014** | SE Comp | Frontend UI & Interactive Stack Visualizer |
+| **4** | **Jade Sai Anand** | **RBT25CS016** | SE Comp | REST API Integration & JSON State Handlers |
+| **5** | **Jagtap Sairaj Prashant** | **RBT25CS017** | SE Comp | Test Suite & Deployment Verification |
 
-Every time a user visits a new website:
-1. The currently active page is **pushed** onto a history stack.
-2. The new website becomes the active page.
-3. When the user clicks **Back**, the most recently visited page is retrieved from the **top** of the stack and **popped**, restoring previous state.
+---
 
-This project implements the core navigation engine in **pure, beginner-friendly C++**, exposing clean REST API endpoints to a modern, responsive web dashboard with a live visual stack visualizer.
+## 📌 Project Description & Objectives
+
+### Project Description
+The **Browser Backtracking Simulator** is a stack-based browser navigation simulator that stores previously visited URLs and restores the previous page using the **Back** operation. It demonstrates how modern web browser navigation stacks operate under the hood using C++ and the **Last-In, First-Out (LIFO)** data structure.
+
+### Project Objectives
+1. **Practical DSA Demonstration:** Bridge theoretical data structure knowledge with real-world browser engineering.
+2. **Pure C++ Engine:** Implement navigation history using the C++ Standard Template Library (`std::stack<std::string>`) without relying on Python or Node.js.
+3. **RESTful Architecture:** Expose clean JSON HTTP API endpoints from a native C++ socket server to a browser frontend.
+4. **Interactive Visualization:** Provide a real-time graphical stack visualizer that animates `push` and `pop` operations for college viva examiners.
+5. **Robust State Handling:** Prevent stack underflow and provide non-destructive history inspection.
 
 ---
 
@@ -313,8 +327,34 @@ Both the C++ backend API and the interactive HTML/CSS/JS frontend are served fro
 
 ---
 
-## 11. Author & Acknowledgments
+## 11. Screenshots & Demonstration Guide
 
-- **Subject:** Data Structures & Algorithms (DSA Practical Mini Project)
-- **Institution:** Department of Computer Engineering / IT, RSCOE Pune
-- **Libraries Used:** C++ Standard Library (`<stack>`, `<string>`, `<vector>`, `<iostream>`), Winsock2 (Windows) / BSD Sockets (Linux).
+To add screenshots of your running simulator to your GitHub repository:
+1. Run the simulator locally using `.\build_and_run.bat` (Option `[1]`) or open the hosted web link.
+2. Visit YouTube, Google Chrome, Instagram, and Learner RSCOE to populate the stack frames.
+3. Capture screenshots using `Windows Key + Shift + S` or the Snipping Tool.
+4. Save the images into a `docs/` or `screenshots/` directory:
+   - `screenshots/dashboard_empty.png` (Empty browser state)
+   - `screenshots/dashboard_populated.png` (Active page with 4 stack frames)
+   - `screenshots/back_navigation.png` (Success notification after pressing Back)
+   - `screenshots/viva_modal.png` (DSA concept viva cheat sheet)
+5. Link them into this `README.md` using:
+   ```markdown
+   ![Dashboard Preview](screenshots/dashboard_populated.png)
+   ```
+
+---
+
+## 12. Authors & Academic Credentials
+
+- **Project Title:** Browser Backtracking Simulator
+- **Subject:** Data Structures (SE Computer Engineering)
+- **Institution:** Department of Computer Engineering, JSPM's Rajarshi Shahu College of Engineering (RSCOE), Pune, Maharashtra, India
+- **Group Members:**
+  - Ganesh Govind Yerawar — RBT25CS012
+  - Ghadge Vishal Kisan — RBT25CS013
+  - Harshal Subhash Patil — RBT25CS014
+  - Jade Sai Anand — RBT25CS016
+  - Jagtap Sairaj Prashant — RBT25CS017
+- **Academic Year:** 2025–2026
+- **Technologies & Libraries:** C++11 STL (`std::stack`, `std::string`, `std::vector`), Winsock2 (Windows Socket API) / POSIX Sockets (Linux), Docker, HTML5, CSS3, ES6 JavaScript.

@@ -373,6 +373,60 @@ btnReopenCurrent.addEventListener('click', () => {
   }
 });
 
+// Team & Viva Modals
+const teamModal = document.getElementById('team-modal');
+const vivaModal = document.getElementById('viva-modal');
+const btnTeamModal = document.getElementById('btn-team-modal');
+const btnVivaModal = document.getElementById('btn-viva-modal');
+const btnCloseTeam = document.getElementById('btn-close-team');
+const btnCloseViva = document.getElementById('btn-close-viva');
+
+if (btnTeamModal && teamModal) {
+  btnTeamModal.addEventListener('click', () => {
+    if (typeof teamModal.showModal === 'function') {
+      teamModal.showModal();
+    } else {
+      teamModal.setAttribute('open', '');
+    }
+  });
+}
+
+if (btnCloseTeam && teamModal) {
+  btnCloseTeam.addEventListener('click', () => {
+    if (typeof teamModal.close === 'function') {
+      teamModal.close();
+    } else {
+      teamModal.removeAttribute('open');
+    }
+  });
+  teamModal.addEventListener('click', (e) => {
+    if (e.target === teamModal) teamModal.close();
+  });
+}
+
+if (btnVivaModal && vivaModal) {
+  btnVivaModal.addEventListener('click', () => {
+    if (typeof vivaModal.showModal === 'function') {
+      vivaModal.showModal();
+    } else {
+      vivaModal.setAttribute('open', '');
+    }
+  });
+}
+
+if (btnCloseViva && vivaModal) {
+  btnCloseViva.addEventListener('click', () => {
+    if (typeof vivaModal.close === 'function') {
+      vivaModal.close();
+    } else {
+      vivaModal.removeAttribute('open');
+    }
+  });
+  vivaModal.addEventListener('click', (e) => {
+    if (e.target === vivaModal) vivaModal.close();
+  });
+}
+
 // Periodic heartbeat & initial load
 window.addEventListener('DOMContentLoaded', () => {
   fetchWebsites();
