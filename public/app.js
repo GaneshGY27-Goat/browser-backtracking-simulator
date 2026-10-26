@@ -165,7 +165,7 @@ async function visitPage(url, siteName = '') {
     window.open(url, '_blank', 'noopener,noreferrer');
 
     // 2. Synchronize with C++ backend stack
-    const res = await fetch(`${API_BASE}/api/visit`, {
+    const res = await fetch(`${API_BASE}/api/visit?url=${encodeURIComponent(url)}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url: url })
