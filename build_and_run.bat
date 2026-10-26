@@ -59,14 +59,12 @@ start /B server.exe
 timeout /t 2 /nobreak >nul
 echo.
 echo ===========================================================================
-echo Creating Public HTTPS Universal Shareable Tunnel via Localtunnel...
+echo Creating Direct Public HTTPS Link (Cloudflare Quick Tunnel - No Sign-in)
 echo ===========================================================================
-echo Your public IP password for first browser load:
-curl -s https://loca.lt/mytunnelpassword
+echo Look for the https://*.trycloudflare.com link below.
+echo Anyone around the world can open it directly with zero passwords or sign-in.
 echo.
-echo (Share the generated HTTPS URL and the IP password above with your teacher/classmates)
-echo.
-npx.cmd -y localtunnel --port 8080
+npx.cmd -y cloudflared tunnel --url http://localhost:8080
 goto end
 
 :run_console
