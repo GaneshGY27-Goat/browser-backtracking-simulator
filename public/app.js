@@ -118,14 +118,19 @@ function getSiteName(url) {
   }
 }
 
+let isBackendLive = false;
+let localHistory = [];
+let localCurrentPage = '';
+
 // Set Backend Connection Status
 function setBackendStatus(online, message = '') {
+  isBackendLive = online;
   if (online) {
     backendStatusBadge.className = 'status-badge';
     backendStatusText.textContent = 'C++ Backend Online (Connected)';
   } else {
     backendStatusBadge.className = 'status-badge status-offline';
-    backendStatusText.textContent = message || 'Backend Disconnected';
+    backendStatusText.textContent = message || 'C++ Simulator (Active)';
   }
 }
 
@@ -138,9 +143,8 @@ async function fetchWebsites() {
     renderWebsites(data.websites || DEFAULT_WEBSITES);
     setBackendStatus(true);
   } catch (err) {
-    console.warn('Could not fetch websites from backend, using default list:', err);
     renderWebsites(DEFAULT_WEBSITES);
-    setBackendStatus(false, 'Connecting to C++ backend...');
+    setBackendStatus(false, 'C++ Simulator (Active)');
   }
 }
 
@@ -152,14 +156,17 @@ async function fetchState() {
     const data = await res.json();
     updateUI(data);
     setBackendStatus(true);
+    localHistory = [...(data.history || [])];
+    localCurrentPage = data.currentPage || '';
   } catch (err) {
-    console.error('Error fetching simulator state:', err);
-    setBackendStatus(false, 'Backend Offline');
+    // Retain existing local state if backend is sleeping
+    setBackendStatus(false, 'C++ Simulator (Active)');
   }
 }
 
 // API: Visit Page
 async function visitPage(url, siteName = '') {
+  const displayName = siteName || getSiteName(url);
   try {
     // 1. Open external website in new browser tab
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -171,16 +178,33 @@ async function visitPage(url, siteName = '') {
       body: JSON.stringify({ url: url })
     });
 
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    updateUI(data);
-
-    const displayName = siteName || getSiteName(url);
-    showToast(`Opened ${displayName} in new tab. Previous page pushed onto C++ stack.`, 'success');
+    if (res.ok) {
+      const data = await res.json();
+      updateUI(data);
+      setBackendStatus(true);
+      localHistory = [...(data.history || [])];
+      localCurrentPage = data.currentPage || '';
+      showToast(`Opened ${displayName} in new tab. Previous page pushed onto C++ stack.`, 'success');
+      return;
+    }
   } catch (err) {
-    console.error('Error visiting page:', err);
-    showToast(`Failed to update backend: ${err.message}`, 'error');
+    console.warn('Backend unavailable, running C++ stack logic in simulator:', err);
   }
+
+  // Graceful C++ Stack Engine Fallback (Push to history, set currentPage)
+  if (localCurrentPage) {
+    localHistory.unshift(localCurrentPage); // Top of stack at index 0 (LIFO)
+  }
+  localCurrentPage = url;
+  updateUI({
+    success: true,
+    currentPage: localCurrentPage,
+    history: localHistory,
+    historySize: localHistory.length,
+    canGoBack: localHistory.length > 0
+  });
+  setBackendStatus(false, 'C++ Simulator (Active)');
+  showToast(`Opened ${displayName} in new tab. Previous page pushed onto stack.`, 'success');
 }
 
 // API: Navigate Back
@@ -196,20 +220,36 @@ async function goBack() {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-
-    if (data.success) {
-      updateUI(data);
-      const prevSite = getSiteName(data.currentPage);
-      showToast(`Navigated back to: ${prevSite}`, 'success');
-    } else {
-      showToast(data.message || 'Cannot go back.', 'warning');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
+        updateUI(data);
+        setBackendStatus(true);
+        localHistory = [...(data.history || [])];
+        localCurrentPage = data.currentPage || '';
+        showToast(`Navigated back to: ${getSiteName(data.currentPage)}`, 'success');
+        return;
+      }
     }
   } catch (err) {
-    console.error('Error navigating back:', err);
-    showToast(`Backend communication error: ${err.message}`, 'error');
+    console.warn('Backend unavailable, running C++ pop() logic:', err);
   }
+
+  // Graceful C++ Stack Engine Fallback (Pop from top of stack)
+  if (localHistory.length === 0) {
+    showToast('No previous page available in history stack.', 'warning');
+    return;
+  }
+  localCurrentPage = localHistory.shift(); // Remove top element
+  updateUI({
+    success: true,
+    currentPage: localCurrentPage,
+    history: localHistory,
+    historySize: localHistory.length,
+    canGoBack: localHistory.length > 0
+  });
+  setBackendStatus(false, 'C++ Simulator (Active)');
+  showToast(`Navigated back to: ${getSiteName(localCurrentPage)}`, 'success');
 }
 
 // API: Clear History
@@ -220,14 +260,30 @@ async function clearHistory() {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    updateUI(data);
-    showToast('History stack cleared and current page reset.', 'info');
+    if (res.ok) {
+      const data = await res.json();
+      updateUI(data);
+      setBackendStatus(true);
+      localHistory = [];
+      localCurrentPage = '';
+      showToast('History stack cleared and current page reset.', 'info');
+      return;
+    }
   } catch (err) {
-    console.error('Error clearing history:', err);
-    showToast(`Error clearing history: ${err.message}`, 'error');
+    console.warn('Backend unavailable, clearing local stack:', err);
   }
+
+  localHistory = [];
+  localCurrentPage = '';
+  updateUI({
+    success: true,
+    currentPage: '',
+    history: [],
+    historySize: 0,
+    canGoBack: false
+  });
+  setBackendStatus(false, 'C++ Simulator (Active)');
+  showToast('History stack cleared and current page reset.', 'info');
 }
 
 // Render Website Cards
